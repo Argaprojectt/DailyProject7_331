@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
 export default function App() {
-  const [page, setPage] = useState('login'); 
-  const [user, setUser] = useState(null); 
+  const [page, setPage] = useState('login');
+  const [user, setUser] = useState(null);
   const [activeCat] = useState('Semua');
-  
+
   const [items, setItems] = useState([
     { id: 1, name: "Fujifilm X-T20", price: "7.500.000", cat: "Elektronik", condition: "Bekas", loc: "Malang", img: "https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?w=600", owner: "admin" },
     { id: 2, name: "Mechanical Keyboard", price: "450.000", cat: "Elektronik", condition: "Baru", loc: "Surabaya", img: "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=600", owner: "enno" },
@@ -17,6 +17,12 @@ export default function App() {
     const role = email.includes('admin') ? 'admin' : 'user';
     setUser({ name: email.split('@')[0], role });
     setPage('home');
+  };
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    alert("Registrasi berhasil! Silakan masuk dengan akun Anda.");
+    setPage('login');
   };
 
   const deleteItem = (id) => {
@@ -35,6 +41,27 @@ export default function App() {
           <input type="password" placeholder="Password" className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none outline-none focus:ring-2 focus:ring-slate-200 transition" required />
           <button className="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition shadow-lg shadow-slate-200">Masuk Sekarang</button>
         </form>
+        <p className="mt-6 text-sm text-slate-500">
+          Belum punya akun? <button onClick={() => setPage('register')} className="text-slate-900 font-bold hover:underline">Daftar</button>
+        </p>
+      </div>
+    </div>
+  );
+
+  if (page === 'register') return (
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6 text-slate-900">
+      <div className="bg-white p-10 rounded-[2.5rem] shadow-xl shadow-slate-200 w-full max-w-md text-center border border-slate-100">
+        <h1 className="text-3xl font-black tracking-tighter mb-2">Daftar Akun</h1>
+        <p className="text-slate-400 text-sm mb-8 font-medium">Buat akun untuk mulai jual beli</p>
+        <form onSubmit={handleRegister} className="space-y-4">
+          <input name="name" type="text" placeholder="Nama Lengkap" className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none outline-none focus:ring-2 focus:ring-slate-200 transition" required />
+          <input name="email" type="email" placeholder="Email" className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none outline-none focus:ring-2 focus:ring-slate-200 transition" required />
+          <input type="password" placeholder="Password" className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none outline-none focus:ring-2 focus:ring-slate-200 transition" required />
+          <button className="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition shadow-lg shadow-slate-200">Daftar Sekarang</button>
+        </form>
+        <p className="mt-6 text-sm text-slate-500">
+          Sudah punya akun? <button onClick={() => setPage('login')} className="text-slate-900 font-bold hover:underline">Masuk</button>
+        </p>
       </div>
     </div>
   );
@@ -51,7 +78,8 @@ export default function App() {
         </div>
         <div className="flex items-center gap-4">
           <button onClick={() => setPage('sell')} className="bg-slate-900 text-white px-5 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-slate-200 hover:scale-105 transition active:scale-95">+ Jual</button>
-          <div className="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center font-bold text-slate-600 border border-slate-200 uppercase">{user.name[0]}</div>
+          <div className="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center font-bold text-slate-600 border border-slate-200 uppercase" title={user.name}>{user.name[0]}</div>
+          <button onClick={() => { setUser(null); setPage('login'); }} className="text-red-500 hover:text-red-600 font-bold text-sm bg-red-50 px-4 py-2 rounded-full hover:bg-red-100 transition">Logout</button>
         </div>
       </nav>
 
@@ -62,7 +90,7 @@ export default function App() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-16">
               <div className="lg:col-span-2 bg-white p-12 rounded-[3rem] border border-slate-100 shadow-sm flex flex-col justify-center">
                 <span className="bg-slate-100 text-slate-600 text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full w-fit mb-6">Marketplace</span>
-                <h2 className="text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] mb-6">Barang lama kamu,<br/><span className="text-slate-400 font-medium italic">harta buat yang lain.</span></h2>
+                <h2 className="text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] mb-6">Barang lama kamu,<br /><span className="text-slate-400 font-medium italic">harta buat yang lain.</span></h2>
                 <div className="flex gap-4 mt-4">
                   <button className="bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold shadow-xl shadow-slate-300 hover:bg-slate-800 transition">Explore</button>
                   <button className="bg-white border border-slate-200 px-8 py-4 rounded-2xl font-bold hover:bg-slate-50 transition">Wishlist</button>
@@ -130,10 +158,10 @@ export default function App() {
             <form className="space-y-4">
               <input placeholder="Nama Barang" className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none outline-none focus:ring-2 focus:ring-slate-100" />
               <div className="grid grid-cols-2 gap-4">
-                 <input placeholder="Harga" className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none outline-none" />
-                 <select className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none outline-none font-medium text-slate-500">
-                    <option>Elektronik</option><option>Fashion</option><option>Pendidikan</option>
-                 </select>
+                <input placeholder="Harga" className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none outline-none" />
+                <select className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none outline-none font-medium text-slate-500">
+                  <option>Elektronik</option><option>Fashion</option><option>Pendidikan</option>
+                </select>
               </div>
               <textarea placeholder="Deskripsi Singkat" className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none outline-none h-32"></textarea>
               <button type="button" onClick={() => setPage('home')} className="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold shadow-xl shadow-slate-200 hover:bg-slate-800 transition">Posting Barang</button>
