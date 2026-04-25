@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 export default function App() {
   const [page, setPage] = useState('login'); 
   const [user, setUser] = useState(null); 
-  const [activeCat, setActiveCat] = useState('Semua');
+  const [activeCat] = useState('Semua');
   
   const [items, setItems] = useState([
     { id: 1, name: "Fujifilm X-T20", price: "7.500.000", cat: "Elektronik", condition: "Bekas", loc: "Malang", img: "https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?w=600", owner: "admin" },
